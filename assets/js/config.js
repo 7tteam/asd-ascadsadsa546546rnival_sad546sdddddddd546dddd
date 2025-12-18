@@ -1,30 +1,31 @@
 // API Configuration
 const API_CONFIG = {
-    // Backend API URL
-    baseURL: 'https://user.7tteam.com/ebyar',
+    BASE_URL: 'https://user.7tteam.com/ebyar/backend',
+    DATA_URL: 'https://user.7tteam.com/ebyar/data',
     
-    // Enable/Disable backend
-    backendEnabled: false,
-    
-    // API Endpoints
     endpoints: {
-        session: '/backend/session.php',
-        directory: '/backend/directory.php',
-        news: '/backend/news.php',
-        events: '/backend/events.php',
-        search: '/backend/search.php',
-        like: '/backend/like.php',
-        rsvp: '/backend/rsvp.php',
-        subscribe: '/backend/subscribe.php',
-        autoGuest: '/backend/auto_guest.php'
+        directory: '/directory.php',
+        news: '/news.php',
+        events: '/events.php',
+        search: '/search.php',
+        like: '/like.php',
+        rsvp: '/rsvp.php',
+        subscribe: '/subscribe.php',
+        session: '/session.php'
     },
     
-    // Get full URL for endpoint
-    getURL: function(endpoint) {
-        if (!this.backendEnabled) return null;
-        return this.baseURL + (this.endpoints[endpoint] || endpoint);
+    getURL(endpoint) {
+        return this.BASE_URL + (this.endpoints[endpoint] || '');
+    },
+    
+    getDataURL(path) {
+        return this.DATA_URL + (path.startsWith('/') ? path : '/' + path);
+    },
+    
+    getHeaders() {
+        return {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        };
     }
 };
-
-// Export for use in other files
-window.API_CONFIG = API_CONFIG;

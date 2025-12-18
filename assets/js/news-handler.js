@@ -31,9 +31,9 @@ class NewsHandler {
         if (!this.checkAuth()) return;
         
         try {
-            const response = await fetch('backend/like.php', {
+            const response = await fetch(API_CONFIG.getURL('like'), {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: API_CONFIG.getHeaders(),
                 body: JSON.stringify({ 
                     postId: postId,
                     userId: this.userId,
@@ -74,9 +74,9 @@ class NewsHandler {
         }
 
         try {
-            const response = await fetch('backend/like.php', {
+            const response = await fetch(API_CONFIG.getURL('like'), {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: API_CONFIG.getHeaders(),
                 body: JSON.stringify({ 
                     postId: postId,
                     userId: this.userId,
