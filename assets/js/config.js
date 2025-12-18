@@ -1,7 +1,10 @@
 // API Configuration
 const API_CONFIG = {
-    // Backend API URL - Change this to your backend server
-    baseURL: 'https://user.7tteam.com/ebyar',  // أو ضع رابط السيرفر بتاع الـ backend
+    // Backend API URL
+    baseURL: 'https://user.7tteam.com/ebyar',
+    
+    // Enable/Disable backend
+    backendEnabled: false,
     
     // API Endpoints
     endpoints: {
@@ -18,6 +21,7 @@ const API_CONFIG = {
     
     // Get full URL for endpoint
     getURL: function(endpoint) {
+        if (!this.backendEnabled) return null;
         return this.baseURL + (this.endpoints[endpoint] || endpoint);
     }
 };
