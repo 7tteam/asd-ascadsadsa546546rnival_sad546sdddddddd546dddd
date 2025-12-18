@@ -1,7 +1,7 @@
 // API Configuration
 const API_CONFIG = {
-    // Backend API URL
-    baseURL: 'https://user.7tteam.com/ebyar',
+    // Backend API URL - Change this to your backend server
+    baseURL: 'https://user.7tteam.com/ebyar',  // أو ضع رابط السيرفر بتاع الـ backend
     
     // API Endpoints
     endpoints: {
