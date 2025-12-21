@@ -335,12 +335,10 @@ class EbyarApp {
             }
         });
         
-        // Directory Search
+        // Directory Search - Fixed
         document.getElementById('directorySearch')?.addEventListener('input', (e) => {
-            const query = e.target.value.trim();
-            if (query.length > 2) {
-                this.searchContacts(query);
-            }
+            const query = e.target.value.trim().toLowerCase();
+            this.searchInDirectory(query);
         });
         
         // Hide search results when clicking outside
@@ -445,6 +443,10 @@ class EbyarApp {
         
             this.renderMainCategories(data.categories);
             this.setupDirectorySearch();
+            
+            if (typeof adsenseManager !== 'undefined') {
+                adsenseManager.initAdsForSection('directory');
+            }
         } catch (e) {
             console.log('Backend not available, showing demo data');
             this.showDemoMessage();
@@ -589,22 +591,29 @@ class EbyarApp {
     }
 
     setupDirectorySearch() {
-        const searchInput = document.getElementById('directorySearch');
-        if (!searchInput) return;
-        
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.trim();
-            if (query.length > 2) {
-                this.searchContacts(query);
-            }
-        });
-        
         const backBtn = document.getElementById('backToMain');
         if (backBtn) {
             backBtn.addEventListener('click', () => {
                 this.showMainCategories();
             });
         }
+    }
+    
+    searchInDirectory(query) {
+        const cards = document.querySelectorAll('#directoryCards .col-md-6, #mainCategories .col-md-6, #mainCategories .col-md-4');
+        
+        if (!query) {
+            cards.forEach(card => card.style.display = '');
+            return;
+        }
+        
+        cards.forEach(card => {
+            const name = card.querySelector('h5, .card-title')?.textContent.toLowerCase() || '';
+            const description = card.querySelector('p, .card-text')?.textContent.toLowerCase() || '';
+            const text = name + ' ' + description;
+            
+            card.style.display = text.includes(query) ? '' : 'none';
+        });
     }
 
     showMainCategories() {
@@ -657,6 +666,10 @@ class EbyarApp {
             const data = await response.json();
         
             this.renderNewsFeed(data.posts);
+            
+            if (typeof adsenseManager !== 'undefined') {
+                adsenseManager.initAdsForSection('news');
+            }
         } catch (e) {
             console.log('News not available');
         }
@@ -669,6 +682,10 @@ class EbyarApp {
             const data = await response.json();
         
             this.renderEvents(data.events);
+            
+            if (typeof adsenseManager !== 'undefined') {
+                adsenseManager.initAdsForSection('events');
+            }
         } catch (e) {
             console.log('Events not available');
         }
@@ -1391,22 +1408,34 @@ class EbyarApp {
     }
 
     async loadQuickActions() {
-        const quickActions = [
-            { icon: 'fas fa-utensils', title: 'مطاعم', category: '1' },
-            { icon: 'fas fa-user-md', title: 'أطباء', category: '2' },
-            { icon: 'fas fa-chalkboard-teacher', title: 'مدرسين', category: '3' },
-            { icon: 'fas fa-tools', title: 'خدمات', category: '4' },
-            { icon: 'fas fa-newspaper', title: 'أخبار', section: 'news' },
-            { icon: 'fas fa-calendar', title: 'أحداث', section: 'events' },
-            { icon: 'fas fa-search', title: 'بحث', action: 'search' },
-            { icon: 'fas fa-plus', title: 'إضافة', action: 'add' }
-        ];
-        
-        this.renderQuickActions(quickActions);
+        try {
+            const response = await fetch(API_CONFIG.getURL('directory'));
+            const data = await response.json();
+            
+            if (data.success && data.categories) {
+                const quickActions = data.categories.map(cat => ({
+                    icon: cat.icon,
+                    title: cat.name,
+                    categoryId: cat.id
+                }));
+                
+                quickActions.push(
+                    { icon: 'fas fa-newspaper', title: 'أخبار', section: 'news' },
+                    { icon: 'fas fa-calendar', title: 'أحداث', section: 'events' },
+                    { icon: 'fas fa-search', title: 'بحث', action: 'search' }
+                );
+                
+                this.renderQuickActions(quickActions);
+            }
+        } catch (e) {
+            console.log('Could not load categories for quick actions');
+        }
     }
 
     renderQuickActions(actions) {
         const container = document.getElementById('quickActions');
+        if (!container) return;
+        
         container.innerHTML = '';
         
         actions.forEach(action => {
@@ -1420,9 +1449,12 @@ class EbyarApp {
             actionElement.addEventListener('click', () => {
                 if (action.section) {
                     this.switchSection(action.section);
-                } else if (action.category) {
+                } else if (action.categoryId) {
                     this.switchSection('directory');
-                    setTimeout(() => this.filterByCategory(action.category), 100);
+                    setTimeout(() => {
+                        const categoryCard = document.querySelector(`[data-category="${action.categoryId}"]`);
+                        if (categoryCard) categoryCard.click();
+                    }, 300);
                 } else if (action.action === 'search') {
                     document.getElementById('searchInput').focus();
                 }
