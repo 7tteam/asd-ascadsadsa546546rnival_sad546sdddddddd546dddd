@@ -11,21 +11,20 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/ultra-modern.css" rel="stylesheet">
+    <link href="https://user.7tteam.com/ebyar/assets/css/style.css" rel="stylesheet">
+    <link href="https://user.7tteam.com/ebyar/assets/css/ultra-modern.css" rel="stylesheet">
 
     <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4F46E5">
-    <link rel="stylesheet" href="assets/css/poll-styles.css">
-    <link rel="stylesheet" href="assets/css/modern-style.css">
+    <link rel="stylesheet" href="https://user.7tteam.com/ebyar/assets/css/poll-styles.css">
+    <link rel="stylesheet" href="https://user.7tteam.com/ebyar/assets/css/modern-style.css">
 
     <!-- Apple PWA -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="دليل ابيار">
-    <link rel="apple-touch-icon" href="fav.png">
-<link rel="icon" type="image/png" sizes="32x32" href="fav.png">
-<link rel="icon" type="image/png" sizes="16x16" href="fav.png">
+    <link rel="apple-touch-icon" href="assets/images/icon-192.png">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
@@ -436,7 +435,6 @@
             </a>
 
             <div class="d-flex align-items-center">
-               
                 <button class="btn btn-outline-primary btn-sm me-2" onclick="openSidebar()">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -484,9 +482,6 @@
             <div class="row mb-4">
                 <div class="col-12">
                     <h4 class="section-title">الخدمات السريعة</h4>
- <a href="https://wa.me/201226588784?text=مرحباً، أريد إضافة رقمي إلى دليل ابيار" class="btn btn-success btn-sm me-2">
-                    <i class="fab fa-whatsapp me-1"></i>أضف رقمك
-                </a>
                     <div class="quick-actions" id="quickActions">
                         <!-- Quick action buttons will be loaded dynamically -->
                     </div>
@@ -787,8 +782,20 @@
     <!-- Notification Container -->
     <div id="notificationContainer" class="notification-container"></div>
 
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9474857494274232"
+     crossorigin="anonymous"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9474857494274232"
+     crossorigin="anonymous"></script>
+    
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- API Config (Must load first) -->
+    <script src="assets/js/config.js"></script>
+    <!-- AdSense Manager -->
+    <script src="assets/js/adsense-manager.js"></script>
     <!-- News Handler JS -->
     <script src="assets/js/news-handler.js"></script>
     <!-- User Session JS -->
@@ -802,7 +809,7 @@
     <!-- Brand Animation JS -->
     <script src="assets/js/brand-animation.js"></script>
 
-    <!-- Device Check Script (Must load first) -->
+    <!-- Device Check Script -->
     <script src="assets/js/device-check.js"></script>
     
     <!-- PWA Registration -->
