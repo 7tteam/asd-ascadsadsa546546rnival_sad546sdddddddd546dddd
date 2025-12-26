@@ -600,7 +600,7 @@ class EbyarApp {
     }
     
     searchInDirectory(query) {
-        const cards = document.querySelectorAll('#directoryCards .col-md-6, #mainCategories .col-md-6, #mainCategories .col-md-4');
+        const cards = document.querySelectorAll('#directoryCards .col-md-6, #directoryCards .col-lg-4');
         
         if (!query) {
             cards.forEach(card => card.style.display = '');
@@ -608,11 +608,14 @@ class EbyarApp {
         }
         
         cards.forEach(card => {
-            const name = card.querySelector('h5, .card-title, h6')?.textContent.toLowerCase() || '';
-            const description = card.querySelector('p, .card-text, .text-muted')?.textContent.toLowerCase() || '';
-            const text = name + ' ' + description;
+            const cardElement = card.querySelector('.directory-card');
+            if (!cardElement) return;
             
-            card.style.display = text.includes(query) ? '' : 'none';
+            const name = cardElement.querySelector('.card-title')?.textContent.toLowerCase() || '';
+            const profession = cardElement.querySelector('.card-text')?.textContent.toLowerCase() || '';
+            const allText = name + ' ' + profession;
+            
+            card.style.display = allText.includes(query) ? '' : 'none';
         });
     }
 
