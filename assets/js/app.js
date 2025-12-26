@@ -608,8 +608,8 @@ class EbyarApp {
         }
         
         cards.forEach(card => {
-            const name = card.querySelector('h5, .card-title')?.textContent.toLowerCase() || '';
-            const description = card.querySelector('p, .card-text')?.textContent.toLowerCase() || '';
+            const name = card.querySelector('h5, .card-title, h6')?.textContent.toLowerCase() || '';
+            const description = card.querySelector('p, .card-text, .text-muted')?.textContent.toLowerCase() || '';
             const text = name + ' ' + description;
             
             card.style.display = text.includes(query) ? '' : 'none';
