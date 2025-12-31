@@ -271,6 +271,15 @@ class EbyarApp {
         document.getElementById('mainNavbar').classList.remove('d-none');
         document.getElementById('bottomNav').classList.remove('d-none');
         this.loadInitialData();
+        
+        // Check if we need to open a contact modal from search
+        const contactId = sessionStorage.getItem('openContactId');
+        if (contactId) {
+            sessionStorage.removeItem('openContactId');
+            setTimeout(() => {
+                this.showContactModal(parseInt(contactId));
+            }, 500);
+        }
     }
 
     setupEventListeners() {
