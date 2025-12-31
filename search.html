@@ -160,7 +160,9 @@
         }
 
         function openContact(id) {
-            window.location.href = `index.html#contact-${id}`;
+            // Save contact ID to open modal after redirect
+            sessionStorage.setItem('openContactId', id);
+            window.location.href = 'index.html';
         }
     </script>
 </body>
