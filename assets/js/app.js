@@ -766,7 +766,19 @@ class EbyarApp {
             
             const whatsappBtn = document.getElementById('whatsappBtn');
             if (contact.whatsapp) {
-                whatsappBtn.href = `https://wa.me/${contact.whatsapp}`;
+                // Format phone number for WhatsApp
+                let phone = contact.whatsapp.replace(/\D/g, ''); // Remove non-digits
+                
+                // Add +20 if number starts with 0 or 1
+                if (phone.startsWith('0') || phone.startsWith('1')) {
+                    phone = '20' + phone;
+                }
+                // Add 20 if number doesn't start with country code
+                else if (!phone.startsWith('20') && phone.length === 10) {
+                    phone = '20' + phone;
+                }
+                
+                whatsappBtn.href = `https://wa.me/${phone}`;
                 whatsappBtn.classList.remove('d-none');
             } else {
                 whatsappBtn.classList.add('d-none');
